@@ -56,7 +56,7 @@ class NewPostPage extends StatelessWidget {
                               Provider.of<PostProvider>(context, listen: false);
                           // PostProvider ก้อคือ class ที่เราได้สร้างไว้เป็น Provider, กำหนด listen เป็น false
                           // และนำตัวแปรตัวนึงเข้าไปรับ
-                          postProvider.addNewHost(message); // เป็นการเพิ่มข้อมูลเข้าไปใน List Provider ของเรา
+                          postProvider.addNewPost(message); // เป็นการเพิ่มข้อมูลเข้าไปใน List Provider ของเรา
 
                           Navigator.pop(context);
                         }
