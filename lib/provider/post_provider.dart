@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
+import 'package:nextflow_personal_post/models/post_model.dart';
 
 // สร้าง provider มารับข้อมุลเก็บไว้ใน List
 class PostProvider with ChangeNotifier {
   // keyword 'this' เป็นการทำให้ class นี้ใช้คุณสมบัติของ ChangeNotifier แต่ต้องมาจาก foundation นะ
   // นี่คือ PostProvider ที่จะเป็นตัวที่ทำหน้าที่ share ข้อมูลให้กับ application ของเรา
-  List<String> _posts = ['Atthana', 'Phiphat'];
+  List<Post> _posts = [];  // จากตอนแรกที่เราเขียนแบบนี้นะ List<Post> _posts = ['Atthana', 'Phiphat']; เราก้อเป่ลี่ยนใหม่เป็น List<Post> โดย Post คือ class ไง เพื่อให้มันสามารถรับได้มากกว่าแค่ String.
   // PostProvder class จะมีการเก็บ list ของ _posts ที่เป็น String ไว้
 
   // function posts นี้จะทำหน้าที่นำข้อมูลที่อยู่ใน list ส่งออกไปยัง widget ที่ต้องการได้
@@ -16,11 +17,12 @@ class PostProvider with ChangeNotifier {
   //   return _posts;
   // }
 
-  List<String> get posts => _posts; // เราเขียนสั้นๆแบบนี้แทนอันบนได้เลย
+  List<Post> get posts => _posts; // เราเขียนสั้นๆแบบนี้แทนอันบนได้เลย
 
-  addNewHost(String post) {
+  addNewHost(String postMessage) {
     // ตัวนี้ทำหน้าที่รับ String เข้ามาแล้วไปเพิ่มเข้าไปใน List _posts
     // _posts.add(post);  // ถ้าใช้ .add มันจะเพิ่มเข้าไปที่ส่วนท้ายของ List นะ ถ้าเราอยากให้มันเป็นตัวแรก จะต้องใช้ insert แทน
+    var post = Post(message: postMessage, createdDate: DateTime.now());  // บรรทัดนี้เราก้อกำหนดขึ้นมาใหม่หลังจากที่สร้าง model ขึ้นมานะ
     _posts.insert(0, post);  // ถ้ากำหนดแบบนี้ จะทำให้ post ไปอยู่ที่ index 0 เสมอ
 
     notifyListeners(); // Function นี้มาจาก ChangeNotifier นะ
