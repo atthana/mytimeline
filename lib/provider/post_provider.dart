@@ -31,13 +31,25 @@ class PostProvider with ChangeNotifier {
 
     var postDB = PostDB(databaseName: 'app.db'); // กำหนดชื่อของ database นะ
     await postDB.save(post);
-    await postDB.loadAllPosts();
+    var postsFormDB = await postDB.loadAllPosts();
 
-    _posts.insert(
-        0, post); // ถ้ากำหนดแบบนี้ จะทำให้ post ไปอยู่ที่ index 0 เสมอ
+    _posts = postsFormDB;
+    //คราวนี้จะเป็นการเอาข้อมูลทั้งหมด ไปแทนที่ List เลย เพราะเป็น List เหมือนกันอยู่แล้ว
+
+    // _posts.insert(0, post);
+    // ถ้ากำหนดแบบนี้ จะทำให้ post ไปอยู่ที่ index 0 เสมอ
 
     notifyListeners(); // Function นี้มาจาก ChangeNotifier นะ
     // โดยมันจะทำการแจ้งเตือน คนที่คอยรับการเปลี่ยนแปลงของข้อมูลจาก provier ตัวนี้อยุ่
     // ซึ่งจะทำให้ consumer ที่รอข้อมูลรับรู้การเปลี่ยนแปลงและดึงข้อมุลไปใช้ได้นะ
+  }
+
+  // ตรงนี้จะไม่มีการสั่ง save ข้อมูลนะ จะสั่ง load อย่างเดียว
+  initData() async {
+    var postDB = PostDB(databaseName: 'app.db');  // เปิดการเชื่อมต่อ database
+    var postsFromDB = await postDB.loadAllPosts(); // โหลดข้อมูลทั้งหมดขึ้นมา เก็บไว้ใน provider
+    _posts = postsFromDB;
+    // _posts = postsFromDB = await postDB.loadAllPosts(); // ใช้แบบนี้ก้อได้นะ
+    notifyListeners();  // สุดท้ายก้อแจ้งเตือน consumser ทุกตัว
   }
 }

@@ -46,7 +46,11 @@ class PostDB {
     var postStore = intMapStoreFactory.store('posts');
     // บอกให้sambast เข้าไปยุ่งกับฐานข้อมูลที่ชื่อว่า posts ชื่อเดียวกับตอน add อ่ะนะ
 
-    var snapshots = await postStore.find(database);
+    var snapshots = await postStore.find(database, finder: Finder(
+      sortOrders: [
+        SortOrder(Field.key, false)
+      ],
+    ));
 
     //==========================
     var postsList = List<Post>();

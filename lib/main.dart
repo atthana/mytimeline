@@ -6,8 +6,14 @@ import 'package:provider/single_child_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 void main() {
-  timeago.setLocaleMessages('th', timeago.ThMessages());  // เราให้โหลดเข้าไป 2 แบบเลยในตอนแรก คือ ธรรมดากับแบบshort แต่ตอนเรียกใช้ใน post_model.dart ค่อยบอกอีกทีว่าจะใช้แบบไหน
-  timeago.setLocaleMessages('th_short', timeago.ThShortMessages());  // ถ้าภาษาไทย ใช้แบบนี้ประโยคจะดูดีกว่า เพราะไม่ได้แปลเป็นไทยแบบโดยตรง
+  timeago.setLocaleMessages(
+      'th',
+      timeago
+          .ThMessages()); // เราให้โหลดเข้าไป 2 แบบเลยในตอนแรก คือ ธรรมดากับแบบshort แต่ตอนเรียกใช้ใน post_model.dart ค่อยบอกอีกทีว่าจะใช้แบบไหน
+  timeago.setLocaleMessages(
+      'th_short',
+      timeago
+          .ThShortMessages()); // ถ้าภาษาไทย ใช้แบบนี้ประโยคจะดูดีกว่า เพราะไม่ได้แปลเป็นไทยแบบโดยตรง
   runApp(MyApp());
 }
 
@@ -43,6 +49,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<PostProvider>(context, listen: false).initData();
+  }
+
   @override
   Widget build(BuildContext context) {
     print('---------------');
